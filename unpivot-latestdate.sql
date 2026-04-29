@@ -77,7 +77,7 @@ SELECT
     PLC_ID,
     mem,
     value,
-    datetime_record AS latest
+    datetime_record AS PLC_date
 FROM (
     SELECT
         [0] AS PLC_ID,
