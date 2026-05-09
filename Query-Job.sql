@@ -86,7 +86,12 @@ master_ref AS (
         msc.[LINE],
         msl.[LINE_NM],
         dtl.[MC_DATA_NAME],
-    CASE WHEN dtl.MC_DATA_NAME LIKE '%LIMIT%' THEN 'LIMIT' ELSE 'COUNTER' END COUNTER_LIMIT
+    CASE 
+        WHEN REPLACE(dtl.MC_DATA_NAME, ' ', '') LIKE '%LIMIT%'   THEN 'LIMIT'
+        WHEN REPLACE(dtl.MC_DATA_NAME, ' ', '') LIKE '%PRESET%'  THEN 'LIMIT'
+        WHEN REPLACE(dtl.MC_DATA_NAME, ' ', '') LIKE '%COUNTER%' THEN 'COUNTER'
+        ELSE 'COUNTER'
+    END AS COUNTER_LIMIT
         -- dtl.[NUM_DIG],
     FROM [MINA_IOT_PKL].[dbo].[MC_DATA_REF_dtl] dtl
     JOIN [MINA_IOT_PKL].[dbo].[MS_MC] msc
